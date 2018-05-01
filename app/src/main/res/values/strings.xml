@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Group4-FitnessApplication</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="distance">Distance: 0.00m</string>
+    <string name="clear">Clear line</string>
+    <string name="reset">Reset Camera</string>
+    <string name="text">Distance: %.2fm</string>
 </resources>
