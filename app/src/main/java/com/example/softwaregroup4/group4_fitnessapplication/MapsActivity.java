@@ -1,12 +1,17 @@
 package com.example.softwaregroup4.group4_fitnessapplication;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -15,6 +20,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+
+
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
@@ -24,6 +31,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button clearBtn;
     private Button resetBtn;
     private static final LatLng UTS = new LatLng(-33.884196, 151.201009);
+    static public final int REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +46,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         distanceTxt = findViewById(R.id.textView1);
         clearBtn = findViewById(R.id.button1);
         resetBtn = findViewById(R.id.button2);
+
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == REQUEST_CODE) {
+            if (permissions.length == 1 &&
+                    permissions[0] == Manifest.permission.ACCESS_FINE_LOCATION &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //map.setMyLocationEnabled(true);
+            } else {
+                // Permission was denied. Display an error message.
+            }
+        }
+    }
+
 
     //when the map is ready this code runs
     @Override
@@ -46,10 +69,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         map = googleMap;
         map.getUiSettings().setZoomControlsEnabled(true); //enable zoom controls on map
 
+
         polyLine = googleMap.addPolyline(new PolylineOptions().add(UTS).width(6).color(Color.RED)); //initialising polyline with first point
         map.addMarker(new MarkerOptions().position(UTS).title("University of Technology Sydney")); //adds a map marker at specified position
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(UTS, 18.0f)); //sets initial camera position and boom
         googleMap.setOnMapClickListener(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        map.setMyLocationEnabled(true);
 
         //a listener for the "clear line" button
         clearBtn.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +100,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(UTS, 18.0f)); //moves the camera to the starting position
             }});
+
     }
 
     @Override
