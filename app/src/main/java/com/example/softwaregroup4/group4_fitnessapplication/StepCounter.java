@@ -22,7 +22,7 @@ public class StepCounter extends AppCompatActivity implements SensorEventListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.layout);
 
         //Initialising the Sensor Manager object
 
