@@ -4,8 +4,11 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -13,6 +16,13 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -20,10 +30,15 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap map;
     private Polyline polyLine;
     private TextView distanceTxt;
@@ -34,6 +49,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final LatLng UTS = new LatLng(-33.884196, 151.201009);
     static public final int REQUEST_CODE = 1;
     private Chronometer timer;
+    private FusedLocationProviderClient mFusedLocationClient;
+    private LocationRequest mLocationRequest;
+    private LocationCallback mLocationCallback;
+    private LatLng myLocation;
+    private Location lastLoc;
+    private GoogleApiClient googleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,22 +69,70 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         distanceTxt = findViewById(R.id.textView1);
         clearBtn = findViewById(R.id.button1);
         resetBtn = findViewById(R.id.button2);
-        time = findViewById(R.id.textView);
         pace = findViewById(R.id.textView2);
         timer = (findViewById(R.id.chronometer));
 
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        createLocationRequest();
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            return;
+        }
+
+        mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    myLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                    updatePolyLine(myLocation);
+                    calculateDistance(polyLine.getPoints());
+
+                }
+            }
+        };
+    }
+    protected void createLocationRequest() {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
+
+    private void startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+    }
+        mFusedLocationClient.requestLocationUpdates(mLocationRequest,
+    mLocationCallback,Looper.myLooper());
+}
+
+    private void stopLocationUpdates() {
+        mFusedLocationClient.removeLocationUpdates(mLocationCallback);
+    }
+
 
     //when the map is ready this code runs
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         map = googleMap;
-
-        polyLine = googleMap.addPolyline(new PolylineOptions().add(UTS).width(6).color(Color.RED)); //initialising polyline with first point
-      // map.addMarker(new MarkerOptions().position(UTS).title("University of Technology Sydney")); //adds a map marker at specified position
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(UTS, 18.0f)); //sets initial camera position and boom
-        googleMap.setOnMapClickListener(this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -72,12 +141,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
        }
 
+
+
     public void startButton (View view) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                // Got last known location. In some rare situations this can be null.
+                if (location != null) {
+                    createPolyline(location);
+                }
+            }
+        });
         timer.start();
+        startLocationUpdates();
     }
 
     public void stopButton (View view) {
         timer.stop();
+        stopLocationUpdates();
     }
 
     @Override
@@ -93,18 +178,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-
-    public void onMapClick(LatLng latLng) {
-        //When the user touches a point on the map that point is added to the line
-        updatePolyLine(latLng);
-        calculateDistance(polyLine.getPoints()); //updates the distance of the line
+    private void createPolyline(Location location) {
+        LatLng point = new LatLng(location.getLatitude(), location.getLongitude());
+        polyLine = map.addPolyline(new PolylineOptions().add(point).width(6).color(Color.RED));
     }
 
     private void updatePolyLine(LatLng latLng) {
-        List<LatLng> newPath = polyLine.getPoints(); //a list of the current points in the line
-        newPath.add(latLng); //adds a new point at the end of the list
-        polyLine.setPoints(newPath); //sets the line to the new path
+        if (!polyLine.getPoints().isEmpty()) {
+            List<LatLng> newPath = polyLine.getPoints(); //a list of the current points in the line
+            newPath.add(latLng); //adds a new point at the end of the list
+            polyLine.setPoints(newPath); //sets the line to the new path
+        }
     }
+
 
     private void calculateDistance(List<LatLng> points) {
         //calculates the distance of the line in metres

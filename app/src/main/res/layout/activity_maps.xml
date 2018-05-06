@@ -14,12 +14,14 @@
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        map:layout_constraintBottom_toTopOf="@+id/toolbar2"
         map:layout_constraintEnd_toEndOf="parent"
-        map:layout_constraintHorizontal_bias="1.0"
+        map:layout_constraintHorizontal_bias="0.51"
         map:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="0dp" />
+        map:layout_constraintTop_toBottomOf="@+id/toolbar3"
+        map:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar2"
@@ -31,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map" />
+        app:layout_constraintTop_toBottomOf="parent" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar3"
@@ -40,7 +42,7 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toTopOf="@+id/map"
+        app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -95,7 +97,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/toolbar3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/map" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView"
@@ -104,7 +106,6 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:text="Time"
-        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.918"
@@ -131,8 +132,8 @@
 
     <Chronometer
         android:id="@+id/chronometer"
-        android:layout_width="47dp"
-        android:layout_height="84dp"
+        android:layout_width="69dp"
+        android:layout_height="30dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -140,11 +141,11 @@
         android:layout_weight="0"
         android:paddingBottom="30dip"
         android:paddingTop="30dip"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar3"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.917"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.521" />
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>
