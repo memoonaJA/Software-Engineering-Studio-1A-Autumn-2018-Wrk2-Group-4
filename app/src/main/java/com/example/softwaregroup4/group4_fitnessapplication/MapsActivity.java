@@ -42,19 +42,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap map;
     private Polyline polyLine;
     private TextView distanceTxt;
-    private Button clearBtn;
-    private Button resetBtn;
+    private Button startBtn;
+    private Button stopBtn;
+    private Button pauseBtn;
+    private Button resumeBtn;
     private TextView time;
     private TextView pace;
-    private static final LatLng UTS = new LatLng(-33.884196, 151.201009);
     static public final int REQUEST_CODE = 1;
     private Chronometer timer;
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
     private LocationCallback mLocationCallback;
     private LatLng myLocation;
-    private Location lastLoc;
-    private GoogleApiClient googleApiClient;
+    private long timeWhenStop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +67,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //initialising textview and buttons
         distanceTxt = findViewById(R.id.textView1);
-        clearBtn = findViewById(R.id.button1);
-        resetBtn = findViewById(R.id.button2);
+        startBtn = findViewById(R.id.button1);
+        stopBtn = findViewById(R.id.button2);
+        pauseBtn = findViewById(R.id.button3);
+        resumeBtn = findViewById(R.id.button4);
         pace = findViewById(R.id.textView2);
         timer = (findViewById(R.id.chronometer));
 
@@ -79,7 +81,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             return;
         }
-
         mLocationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
@@ -90,6 +91,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     myLocation = new LatLng(location.getLatitude(), location.getLongitude());
                     updatePolyLine(myLocation);
                     calculateDistance(polyLine.getPoints());
+                    map.animateCamera(CameraUpdateFactory.newLatLng(myLocation));
 
                 }
             }
@@ -100,18 +102,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mLocationRequest.setInterval(10000);
         mLocationRequest.setFastestInterval(5000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
     }
 
 
@@ -132,18 +122,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         map = googleMap;
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(UTS, 18.0f)); //sets initial camera position and boom
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        map.setMyLocationEnabled(true);
-        timer.setBase(SystemClock.elapsedRealtime());
 
-       }
-
-
-
-    public void startButton (View view) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -152,17 +131,73 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onSuccess(Location location) {
                 // Got last known location. In some rare situations this can be null.
                 if (location != null) {
-                    createPolyline(location);
+                    LatLng locat = new LatLng(location.getLatitude(), location.getLongitude());
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(locat, 18.0f)); //sets initial camera position
                 }
             }
         });
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        map.setMyLocationEnabled(true);
+      timer.setBase(SystemClock.elapsedRealtime());
+
+       }
+
+    public void startButton (View view) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+            mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    // Got last known location. In some rare situations this can be null.
+                    if (location != null) {
+                        createPolyline(location);
+                    }
+                }
+            });
+        startBtn.setClickable(false);
+        timer.setBase(SystemClock.elapsedRealtime() + timeWhenStop);
         timer.start();
         startLocationUpdates();
+        stopBtn.setVisibility(View.INVISIBLE);
+        pauseBtn.setVisibility(View.VISIBLE);
+
     }
 
     public void stopButton (View view) {
+        timeWhenStop = timer.getBase() - SystemClock.elapsedRealtime();
         timer.stop();
         stopLocationUpdates();
+        startBtn.setVisibility(View.VISIBLE);
+        resumeBtn.setVisibility(View.INVISIBLE);
+        startBtn.setClickable(true);
+        polyLine.remove();
+        timer.setBase(SystemClock.elapsedRealtime());
+        timeWhenStop = 0;
+        calculateDistance(polyLine.getPoints());
+        distanceTxt.setText(getString(R.string.text, 0f));
+    }
+
+    public void pauseButton (View view) {
+        timeWhenStop = timer.getBase() - SystemClock.elapsedRealtime();
+        timer.stop();
+        stopLocationUpdates();
+        pauseBtn.setVisibility(View.INVISIBLE);
+        stopBtn.setVisibility(View.VISIBLE);
+        startBtn.setVisibility(View.INVISIBLE);
+        resumeBtn.setVisibility(View.VISIBLE);
+        resumeBtn.setClickable(true);
+    }
+
+    public void resumeButton (View view) {
+        startLocationUpdates();
+        timer.setBase(SystemClock.elapsedRealtime() + timeWhenStop);
+        timer.start();
+        pauseBtn.setVisibility(View.VISIBLE);
+        stopBtn.setVisibility(View.INVISIBLE);
+        resumeBtn.setClickable(false);
     }
 
     @Override
@@ -193,12 +228,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     private void calculateDistance(List<LatLng> points) {
-        //calculates the distance of the line in metres
+        //calculates the distance of the line in metre  s
         Location previousPoint = new Location("");
         Location point = new Location("");
         float sum = 0;
         float pace1 = 0;
-        long elapsed = SystemClock.elapsedRealtime()-timer.getBase();
+        long elapsed = (SystemClock.elapsedRealtime()-timeWhenStop);
+     //   long seconds = (elapsed /1000)%60;
+        float minutes = (elapsed/1000)/60;
         for (int i=0; i<points.size(); ++i) {
             point.setLatitude(points.get(i).latitude);
             point.setLongitude(points.get(i).longitude);
@@ -211,7 +248,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             previousPoint.setLatitude(point.getLatitude());
             previousPoint.setLongitude(point.getLongitude());
         }
-        pace1 = (elapsed)/(sum)/100;
+        pace1 = ((minutes)/(sum/1000))/60;
         pace.setText(getString(R.string.text1, pace1));
         distanceTxt.setText(getString(R.string.text, sum));
 
