@@ -4,11 +4,9 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.SystemClock;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -16,13 +14,11 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -30,12 +26,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -46,7 +37,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button stopBtn;
     private Button pauseBtn;
     private Button resumeBtn;
-    private TextView time;
     private TextView pace;
     static public final int REQUEST_CODE = 1;
     private Chronometer timer;
@@ -117,7 +107,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
     }
 
-
     //when the map is ready this code runs
     @Override
     public void onMapReady(final GoogleMap googleMap) {
@@ -140,7 +129,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
         map.setMyLocationEnabled(true);
-      timer.setBase(SystemClock.elapsedRealtime());
+        map.getUiSettings().setZoomControlsEnabled(true);
+        map.getUiSettings().setZoomGesturesEnabled(true);
+        timer.setBase(SystemClock.elapsedRealtime());
 
        }
 
@@ -251,6 +242,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         pace1 = ((minutes)/(sum/1000))/60;
         pace.setText(getString(R.string.text1, pace1));
         distanceTxt.setText(getString(R.string.text, sum));
-
     }
 }
