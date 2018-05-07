@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient">
+
+    <TextView
+        android:id="@+id/FirstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/LastNameInput"
+        android:layout_alignStart="@+id/LastName"
+        android:layout_marginBottom="18dp"
+        android:layout_weight="1"
+        android:text="First Name:"
+        android:textColor="@android:color/white"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    </android.support.design.widget.AppBarLayout>
+
+    <EditText
+        android:id="@+id/FirstNameInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/FirstName"
+        android:layout_alignBottom="@+id/FirstName"
+        android:layout_alignStart="@+id/UsernameInput"
+        android:ems="10"
+        android:hint="First Name..."
+        android:inputType="textPersonName"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/LastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="80dp"
+        android:layout_weight="1"
+        android:text="Last Name:"
+        android:textColor="@android:color/white"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/LastNameInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/LastName"
+        android:layout_alignBottom="@+id/LastName"
+        android:layout_alignStart="@+id/FirstNameInput"
+        android:ems="10"
+        android:hint="Last Name..."
+        android:inputType="textPersonName"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/Email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/LastName"
+        android:layout_below="@+id/LastNameInput"
+        android:layout_marginTop="21dp"
+        android:layout_weight="1"
+        android:text="Email:"
+        android:textColor="@android:color/white"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/EmailInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/Email"
+        android:layout_alignBottom="@+id/Email"
+        android:layout_alignStart="@+id/FirstNameInput"
+        android:ems="10"
+        android:hint="Email Address..."
+        android:inputType="textPersonName"
+        android:textSize="18dp" />
+
+
+    <TextView
+        android:id="@+id/InitialPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/Email"
+        android:layout_below="@+id/EmailInput"
+        android:layout_marginTop="21dp"
+        android:layout_weight="1"
+        android:text="Password:"
+        android:textColor="@android:color/white"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/IntialPasswordInput"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_alignBaseline="@+id/InitialPassword"
+        android:layout_alignBottom="@+id/InitialPassword"
+        android:layout_alignStart="@+id/EmailInput"
+        android:layout_marginHorizontal="0dp"
+        android:ems="10"
+        android:hint="Password..."
+        android:inputType="textPassword"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/ConfirmPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/InitialPassword"
+        android:layout_below="@+id/IntialPasswordInput"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:text="Confirm Password:"
+        android:textColor="@android:color/white"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/ConfirmPasswordInput"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:layout_alignBaseline="@+id/ConfirmPassword"
+        android:layout_alignBottom="@+id/ConfirmPassword"
+        android:layout_alignStart="@+id/UsernameInput"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginStart="12dp"
+        android:ems="10"
+        android:hint="Confirm Password..."
+        android:inputType="textPassword"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/Username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/ConfirmPassword"
+        android:layout_below="@+id/ConfirmPasswordInput"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:text="Username:"
+        android:textColor="@android:color/white"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/UsernameInput"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_alignBaseline="@+id/Username"
+        android:layout_alignBottom="@+id/Username"
+        android:layout_marginHorizontal="55dp"
+        android:layout_toEndOf="@+id/LastName"
+        android:ems="10"
+        android:hint="Username..."
+        android:textSize="18dp" />
+
+    <Button
+        android:id="@+id/RegisterButton"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/UsernameInput"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/profile_picturebg"
+        android:onClick="onRegisterPressed"
+        android:text="Register!" />
+
+</RelativeLayout>
