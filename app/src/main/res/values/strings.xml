@@ -10,4 +10,5 @@
     <string name="text">Distance: %.2fm</string>
     <string name="text1">%.1f min/km</string>
     <string name="title_activity_maps2">Map</string>
+    <string name="login">Login</string>
 </resources>
