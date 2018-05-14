@@ -23,7 +23,7 @@ public class Activity2Test extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_activity2_test);
+        setContentView(R.layout.app_bar_activity2_test);
 
         /**Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
          setSupportActionBar(toolbar);
