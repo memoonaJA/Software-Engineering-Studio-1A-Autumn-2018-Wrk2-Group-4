@@ -1,11 +1,13 @@
 package com.example.softwaregroup4.group4_fitnessapplication;
 
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.softwaregroup4.group4_fitnessapplication.R;
@@ -60,6 +62,11 @@ public class StepCounter extends AppCompatActivity implements SensorEventListene
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         //Not in Use for this activity
+    }
+
+    public void changeMaps(View view) {
+        Intent intent = new Intent(this, Summary.class);
+        startActivity(intent);
     }
 
 }

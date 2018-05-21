@@ -63,6 +63,7 @@
             android:layout_marginTop="20dp"
             android:background="#048b7a"
             android:gravity="center"
+            android:onClick="changeMaps"
             android:text="Workout activities"
             app:layout_constraintEnd_toEndOf="@+id/view"
             app:layout_constraintStart_toStartOf="@+id/view"

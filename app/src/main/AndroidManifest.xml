@@ -42,12 +42,10 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
             android:parentActivityName=".MainActivity" />
-
         <activity
             android:name=".StepCounter"
             android:label="Step"
             android:parentActivityName=".MainActivity" />
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,22 +53,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Activity2Test"
             android:label="@string/title_activity_activity2_test"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
-        <activity android:name=".Register"
-            android:label="Register"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".BMI"
-            ></activity>
-
-
+            android:name=".Register"
+            android:label="Register"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".BMI" />
+        <activity android:name=".Workout" />
+        <activity android:name=".Summary"></activity>
     </application>
 
 </manifest>
