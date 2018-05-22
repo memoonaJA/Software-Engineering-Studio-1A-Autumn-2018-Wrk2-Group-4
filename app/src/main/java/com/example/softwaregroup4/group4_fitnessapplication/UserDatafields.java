@@ -4,7 +4,7 @@ package com.example.softwaregroup4.group4_fitnessapplication;
  * Created by Manny on 13/4/18.
  */
 
-public class User {
+public class UserDatafields {
 
     String Username, Password, Email, FirstName, LastName;
 

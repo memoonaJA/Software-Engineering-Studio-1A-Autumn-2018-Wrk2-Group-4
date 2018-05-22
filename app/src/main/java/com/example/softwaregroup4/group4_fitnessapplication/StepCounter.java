@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.example.softwaregroup4.group4_fitnessapplication.R;
-
 public class StepCounter extends AppCompatActivity implements SensorEventListener {
 
     //Declaration of the required objects

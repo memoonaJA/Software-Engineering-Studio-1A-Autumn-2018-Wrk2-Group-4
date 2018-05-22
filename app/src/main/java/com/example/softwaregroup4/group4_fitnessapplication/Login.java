@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class MainLoginActivity extends AppCompatActivity {
+public class Login extends AppCompatActivity {
     private Button loginbutt;
     private EditText username;
     private EditText password;
@@ -23,7 +23,7 @@ public class MainLoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_login);
+        setContentView(R.layout.activity_login);
 
         loginbutt = (Button) findViewById(R.id.LoginButton);
         username = (EditText) findViewById(R.id.UsernameText);
@@ -56,7 +56,7 @@ public class MainLoginActivity extends AppCompatActivity {
             else if(!(TextUtils.isEmpty(usernameString) && TextUtils.isEmpty(passwordString))){
                 String pass = Database.searchForPassword(usernameString);
                 if(pass.equals(passwordString)){
-                    Intent intent1 = new Intent(MainLoginActivity.this, Activity2Test.class);
+                    Intent intent1 = new Intent(Login.this, UserScreen.class);
                     intent1.putExtra("Username1", usernameString);
                     startActivity(intent1);
 
@@ -72,7 +72,7 @@ public class MainLoginActivity extends AppCompatActivity {
 
 
         if(view.getId() == R.id.InitialRegisterButton){
-            Intent intent2 = new Intent(MainLoginActivity.this, Register.class);
+            Intent intent2 = new Intent(Login.this, Register.class);
             startActivity(intent2);
         }
 
@@ -84,7 +84,7 @@ public class MainLoginActivity extends AppCompatActivity {
     //     if(pass.equals("")){ //FIX????
 
     //     }
-    //         Intent intent1 = new Intent(this, Activity2Test.class);
+    //         Intent intent1 = new Intent(this, UserScreen.class);
     //         intent1.putExtra("Username1", username);
     //         startActivity(intent1);
     //   finish();

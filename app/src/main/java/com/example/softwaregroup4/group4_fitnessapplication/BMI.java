@@ -7,18 +7,11 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.widget.EditText;
-import android.widget.TextView;
-
 public class BMI extends AppCompatActivity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.bmi);
+            setContentView(R.layout.activity_bmi);
             /* EditText Height listener */
             EditText editTextHeight = (EditText)findViewById(R.id.editTextHeight);
             editTextHeight.addTextChangedListener(new TextWatcher() {

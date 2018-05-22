@@ -1,29 +1,26 @@
 package com.example.softwaregroup4.group4_fitnessapplication;
 
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 
-public class Activity2Test extends AppCompatActivity
+public class UserScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TextView usernameDisplay1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.app_bar_activity2_test);
+        setContentView(R.layout.activity_user_screen);
 
         /**Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
          setSupportActionBar(toolbar);
@@ -50,14 +47,14 @@ public class Activity2Test extends AppCompatActivity
 
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+    public void changeMaps(View view) {
+        Intent intent = new Intent(this, Maps_GPS.class);
+        startActivity(intent);
+    }
+
+    public void changeSteps(View view) {
+        Intent intent = new Intent(this, StepCounter.class);
+        startActivity(intent);
     }
 
     @Override

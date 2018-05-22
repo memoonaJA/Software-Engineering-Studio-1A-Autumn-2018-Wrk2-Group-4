@@ -1,11 +1,10 @@
 package com.example.softwaregroup4.group4_fitnessapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -28,7 +27,7 @@ public class Register extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.registerscreen);
+        setContentView(R.layout.activity_register);
 
         FirstNameField = (EditText) findViewById(R.id.FirstNameInput);
         LastNameField = (EditText) findViewById(R.id.LastNameInput);
@@ -53,7 +52,7 @@ public class Register extends AppCompatActivity {
 
             } else {
                 //insert details in the database
-                User user = new User();
+                UserDatafields user = new UserDatafields();
                 user.setFirstName(FirstNameField1);
                 user.setLastName(LastNameField1);
                 user.setEmail(EmailField1);
@@ -61,6 +60,8 @@ public class Register extends AppCompatActivity {
                 user.setUsername(UsernameField1);
 
                 database.addUser(user);
+                Intent intent = new Intent(this, Login.class);
+                startActivity(intent);
 
             }
         }

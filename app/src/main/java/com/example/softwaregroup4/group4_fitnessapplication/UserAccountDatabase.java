@@ -36,7 +36,7 @@ public class UserAccountDatabase extends SQLiteOpenHelper {
         this.db = db;
     }
 
-    public void addUser(User user) {
+    public void addUser(UserDatafields user) {
 
         db = this.getWritableDatabase();
         ContentValues VALUES = new ContentValues();

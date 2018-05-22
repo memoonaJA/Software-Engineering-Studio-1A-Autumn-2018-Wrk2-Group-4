@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#26a69a">
-   <!-- tools:context="com.example.manny.loginscreentestmanny.Activity2Test"> -->
+   <!-- tools:context="com.example.manny.loginscreentestmanny.UserScreen"> -->
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -63,7 +63,23 @@
             android:layout_marginTop="20dp"
             android:background="#048b7a"
             android:gravity="center"
-            android:text="Workout activities"
+            android:onClick="changeSteps"
+            android:text="Step counter"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintStart_toStartOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/button5" />
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="190dp"
+            android:layout_height="65dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            android:background="#048b7a"
+            android:gravity="center"
+            android:onClick="changeMaps"
+            android:text="GPS TRACKER"
             app:layout_constraintEnd_toEndOf="@+id/view"
             app:layout_constraintStart_toStartOf="@+id/view"
             app:layout_constraintTop_toBottomOf="@+id/button3" />
@@ -93,7 +109,7 @@
             android:layout_marginTop="16dp"
             android:background="#048b7a"
             android:gravity="center"
-            android:text="Achievements"
+            android:text="WORKOUT ACtiVITIES"
             app:layout_constraintEnd_toEndOf="@+id/view"
             app:layout_constraintStart_toStartOf="@+id/view"
             app:layout_constraintTop_toBottomOf="@+id/view" />

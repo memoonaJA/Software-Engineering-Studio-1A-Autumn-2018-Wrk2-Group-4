@@ -29,7 +29,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import java.util.List;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap map;
     private Polyline polyLine;
     private TextView distanceTxt;
