@@ -12,4 +12,5 @@
     <string name="title_activity_maps2">Map</string>
     <string name="login">Login</string>
     <string name="title_activity_activity2_test">Activity2Test</string>
+    <string name="title_activity_summary__gps">Summary_GPS</string>
 </resources>

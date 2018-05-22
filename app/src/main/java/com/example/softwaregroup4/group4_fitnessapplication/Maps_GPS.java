@@ -1,6 +1,7 @@
 package com.example.softwaregroup4.group4_fitnessapplication;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -45,6 +46,7 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
     private LocationCallback mLocationCallback;
     private LatLng myLocation;
     private long timeWhenStop;
+    private float distances;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +70,6 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
         createLocationRequest();
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
             return;
         }
         mLocationCallback = new LocationCallback() {
@@ -89,8 +90,8 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
     }
     protected void createLocationRequest() {
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(5000);
-        mLocationRequest.setFastestInterval(2500);
+        mLocationRequest.setInterval(1000);
+        mLocationRequest.setFastestInterval(1000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
@@ -105,6 +106,7 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
 
     private void stopLocationUpdates() {
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
+        calculateDistance(polyLine.getPoints());
     }
 
     //when the map is ready this code runs
@@ -149,7 +151,7 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
                 }
             });
         startBtn.setClickable(false);
-        timer.setBase(SystemClock.elapsedRealtime() + timeWhenStop);
+        timer.setBase(SystemClock.elapsedRealtime());
         timer.start();
         startLocationUpdates();
         stopBtn.setVisibility(View.INVISIBLE);
@@ -164,11 +166,10 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
         startBtn.setVisibility(View.VISIBLE);
         resumeBtn.setVisibility(View.INVISIBLE);
         startBtn.setClickable(true);
-        polyLine.remove();
-        timer.setBase(SystemClock.elapsedRealtime());
-        timeWhenStop = 0;
-        calculateDistance(polyLine.getPoints());
-        distanceTxt.setText(getString(R.string.text, 0f));
+        Intent intent = new Intent(this, Summary_GPS.class);
+        intent.putExtra("Distances", String.valueOf(distances));
+        intent.putExtra("Time", String.valueOf(timeWhenStop));
+        startActivity(intent);
     }
 
     public void pauseButton (View view) {
@@ -224,9 +225,10 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
         Location point = new Location("");
         float sum = 0;
         float pace1 = 0;
-        long elapsed = (SystemClock.elapsedRealtime()-timeWhenStop);
-     //   long seconds = (elapsed /1000)%60;
-        float minutes = (elapsed/1000)/60;
+        long elapsed = (SystemClock.elapsedRealtime() - timer.getBase());
+        float seconds = elapsed/1000%60;
+        float minutes = elapsed/1000/60;
+        float time1 = (seconds + minutes) /60;
         for (int i=0; i<points.size(); ++i) {
             point.setLatitude(points.get(i).latitude);
             point.setLongitude(points.get(i).longitude);
@@ -239,8 +241,10 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
             previousPoint.setLatitude(point.getLatitude());
             previousPoint.setLongitude(point.getLongitude());
         }
-        pace1 = ((minutes)/(sum/1000))/60;
+        pace1 = (time1)/(sum/1000);
+        //pace.setText(String.valueOf(minutes + seconds));
         pace.setText(getString(R.string.text1, pace1));
         distanceTxt.setText(getString(R.string.text, sum));
+        distances = sum;
     }
 }
