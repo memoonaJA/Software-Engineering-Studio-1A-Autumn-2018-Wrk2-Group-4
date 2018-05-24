@@ -33,13 +33,10 @@
 
         <activity
             android:name=".Maps_GPS"
-            android:label="@string/title_activity_maps"
-            android:parentActivityName=".OldMainActivity" />
+            android:label="@string/title_activity_maps" />
         <activity
             android:name=".StepCounter"
-            android:label="Step"
-            android:parentActivityName=".OldMainActivity" />
-        <activity android:name=".OldMainActivity"></activity>
+            android:label="Step" />
         <activity
             android:name=".UserScreen"
             android:label="@string/title_activity_activity2_test"
@@ -47,12 +44,14 @@
         <activity
             android:name=".Register"
             android:label="Register"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".BMI" />
         <activity
             android:name=".Summary_GPS"
             android:label="@string/title_activity_summary__gps"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Workouts" />
+        <activity android:name=".Summary_workout"></activity>
     </application>
 
 </manifest>

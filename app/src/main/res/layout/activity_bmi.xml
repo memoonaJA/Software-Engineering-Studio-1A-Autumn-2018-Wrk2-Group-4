@@ -66,12 +66,11 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <TextView
-        android:text="TextView"
+        android:id="@+id/textViewResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView6"
         android:layout_marginTop="15dp"
-        android:id="@+id/textViewResult"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <TextView

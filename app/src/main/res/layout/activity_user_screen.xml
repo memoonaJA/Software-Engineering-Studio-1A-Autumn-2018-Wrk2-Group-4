@@ -63,8 +63,8 @@
             android:layout_marginTop="20dp"
             android:background="#048b7a"
             android:gravity="center"
-            android:onClick="changeSteps"
-            android:text="Step counter"
+            android:onClick="changeBMI"
+            android:text="BMI"
             app:layout_constraintEnd_toEndOf="@+id/view"
             app:layout_constraintStart_toStartOf="@+id/view"
             app:layout_constraintTop_toBottomOf="@+id/button5" />
@@ -109,6 +109,7 @@
             android:layout_marginTop="16dp"
             android:background="#048b7a"
             android:gravity="center"
+            android:onClick="changeWorkout"
             android:text="WORKOUT ACtiVITIES"
             app:layout_constraintEnd_toEndOf="@+id/view"
             app:layout_constraintStart_toStartOf="@+id/view"

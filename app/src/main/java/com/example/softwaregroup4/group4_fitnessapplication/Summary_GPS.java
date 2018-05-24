@@ -21,8 +21,6 @@ public class Summary_GPS extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary__gps);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         distanceTxt = findViewById(R.id.textView7);
         timeTxt = findViewById(R.id.textView4);
         helloTxt = findViewById(R.id.textView10);
