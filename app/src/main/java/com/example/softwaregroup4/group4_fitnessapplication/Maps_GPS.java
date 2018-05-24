@@ -47,6 +47,8 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
     private LatLng myLocation;
     private long timeWhenStop;
     private float distances;
+    private float timeStop;
+    private String usernameDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,10 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
         resumeBtn = findViewById(R.id.button4);
         pace = findViewById(R.id.textView2);
         timer = (findViewById(R.id.chronometer));
+
+        usernameDisplay = getIntent().getStringExtra("Username1");
+
+
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         createLocationRequest();
@@ -106,7 +112,6 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
 
     private void stopLocationUpdates() {
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
-        calculateDistance(polyLine.getPoints());
     }
 
     //when the map is ready this code runs
@@ -150,13 +155,13 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
                     }
                 }
             });
+
         startBtn.setClickable(false);
         timer.setBase(SystemClock.elapsedRealtime());
         timer.start();
         startLocationUpdates();
         stopBtn.setVisibility(View.INVISIBLE);
         pauseBtn.setVisibility(View.VISIBLE);
-
     }
 
     public void stopButton (View view) {
@@ -166,10 +171,14 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
         startBtn.setVisibility(View.VISIBLE);
         resumeBtn.setVisibility(View.INVISIBLE);
         startBtn.setClickable(true);
+        polyLine.remove();
+        calculateDistance(polyLine.getPoints());
         Intent intent = new Intent(this, Summary_GPS.class);
-        intent.putExtra("Distances", String.valueOf(distances));
-        intent.putExtra("Time", String.valueOf(timeWhenStop));
+        intent.putExtra("distances", String.format("%.2f", distances));
+        intent.putExtra("time", String.format("%.2f", timeStop));
+        intent.putExtra("Username", usernameDisplay);
         startActivity(intent);
+
     }
 
     public void pauseButton (View view) {
@@ -243,8 +252,15 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
         }
         pace1 = (time1)/(sum/1000);
         //pace.setText(String.valueOf(minutes + seconds));
-        pace.setText(getString(R.string.text1, pace1));
+        if (sum == 0) {
+
+        }
+        else {
+            pace.setText(getString(R.string.text1, pace1));
+        }
+
         distanceTxt.setText(getString(R.string.text, sum));
         distances = sum;
+        timeStop = time1;
     }
 }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 public class UserScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TextView usernameDisplay1;
+    private String usernameDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class UserScreen extends AppCompatActivity
          NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
          navigationView.setNavigationItemSelectedListener(this);**/
 
-        String usernameDisplay = getIntent().getStringExtra("Username1");
+        usernameDisplay = getIntent().getStringExtra("Username1");
 
         usernameDisplay1 = (TextView) findViewById(R.id.UsernameDisplayText);
         usernameDisplay1.setText(usernameDisplay);
@@ -49,6 +50,7 @@ public class UserScreen extends AppCompatActivity
 
     public void changeMaps(View view) {
         Intent intent = new Intent(this, Maps_GPS.class);
+        intent.putExtra("Username1", usernameDisplay);
         startActivity(intent);
     }
 

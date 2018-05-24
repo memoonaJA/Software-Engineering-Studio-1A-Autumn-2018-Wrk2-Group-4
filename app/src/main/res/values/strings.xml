@@ -8,7 +8,7 @@
     <string name="stop">Stop</string>
     <string name="resume">Resume</string>
     <string name="text">Distance: %.2fm</string>
-    <string name="text1">%.1f min/km</string>
+    <string name="text1">Pace: %.1f min/km</string>
     <string name="title_activity_maps2">Map</string>
     <string name="login">Login</string>
     <string name="title_activity_activity2_test">Activity2Test</string>
