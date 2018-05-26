@@ -4,6 +4,10 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
@@ -30,7 +34,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import java.util.List;
 
-public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
+public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback, SensorEventListener {
     private GoogleMap map;
     private Polyline polyLine;
     private TextView distanceTxt;
@@ -50,6 +54,11 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
     private float timeStop;
     private String usernameDisplay;
 
+    private TextView step;
+    private Sensor step_counter;
+    private SensorManager sensorManager;
+    private int steps = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,10 +76,9 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
         resumeBtn = findViewById(R.id.button4);
         pace = findViewById(R.id.textView2);
         timer = (findViewById(R.id.chronometer));
+        step = (TextView)findViewById(R.id.textView11);
 
         usernameDisplay = getIntent().getStringExtra("Username1");
-
-
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         createLocationRequest();
@@ -93,7 +101,14 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
                 }
             }
         };
+
+        pauseBtn.setClickable(false);
+        sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+        assert sensorManager != null; //Prevent Null Pointer Exception for sensorManager
+        step_counter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        sensorManager.registerListener(this, step_counter, SensorManager.SENSOR_DELAY_FASTEST);
     }
+
     protected void createLocationRequest() {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(1000);
@@ -155,13 +170,13 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
                     }
                 }
             });
-
         startBtn.setClickable(false);
         timer.setBase(SystemClock.elapsedRealtime());
         timer.start();
         startLocationUpdates();
         stopBtn.setVisibility(View.INVISIBLE);
         pauseBtn.setVisibility(View.VISIBLE);
+        pauseBtn.setClickable(true);
     }
 
     public void stopButton (View view) {
@@ -177,6 +192,7 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
         intent.putExtra("distances", String.format("%.2f", distances));
         intent.putExtra("time", String.format("%.2f", timeStop));
         intent.putExtra("Username", usernameDisplay);
+        intent.putExtra("Steps", steps);
         startActivity(intent);
 
     }
@@ -227,7 +243,6 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
         }
     }
 
-
     private void calculateDistance(List<LatLng> points) {
         //calculates the distance of the line in metre  s
         Location previousPoint = new Location("");
@@ -258,9 +273,19 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback {
         else {
             pace.setText(getString(R.string.text1, pace1));
         }
-
         distanceTxt.setText(getString(R.string.text, sum));
         distances = sum;
         timeStop = time1;
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        steps++;
+        step.setText("Steps: " + steps);
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 }

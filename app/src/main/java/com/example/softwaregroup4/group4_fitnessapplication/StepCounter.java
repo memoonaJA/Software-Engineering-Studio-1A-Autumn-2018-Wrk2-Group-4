@@ -41,9 +41,6 @@ public class StepCounter extends AppCompatActivity implements SensorEventListene
 
         step = (TextView)findViewById(R.id.step);
 
-
-
-
     }
 
     // Methods implemented from SensorEventListener class
