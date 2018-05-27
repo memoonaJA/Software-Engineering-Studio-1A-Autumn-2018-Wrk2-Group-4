@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StepCounter">
+
+    <TextView
+        android:id="@+id/step"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:text="Step Count: 0"
+        android:textSize="30sp"
+        tools:layout_editor_absoluteX="102dp"
+        tools:layout_editor_absoluteY="94dp" />
+
+    <TextView
+        android:id="@+id/Time_Elapsed"
+        android:layout_width="283dp"
+        android:layout_height="58dp"
+        android:text="Time Elapsed: 00.00"
+        android:textSize="30sp"
+        tools:layout_editor_absoluteX="51dp"
+        tools:layout_editor_absoluteY="192dp" />
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="220dp"
+        android:layout_height="63dp"
+        android:onClick="changeMaps"
+        android:text="END"
+        android:textSize="30sp"
+        tools:layout_editor_absoluteX="82dp"
+        tools:layout_editor_absoluteY="389dp" />
+
+    <Button
+        android:id="@+id/button10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop/Start Timer"
+        android:textSize="14sp"
+        tools:layout_editor_absoluteX="115dp"
+        tools:layout_editor_absoluteY="319dp" />
+
+
+</android.support.constraint.ConstraintLayout>
