@@ -51,7 +51,8 @@
             android:label="@string/title_activity_summary__gps"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Workouts" />
-        <activity android:name=".Summary_workout"></activity>
+        <activity android:name=".Summary_workout" />
+        <activity android:name=".leaderboard"></activity>
     </application>
 
 </manifest>
