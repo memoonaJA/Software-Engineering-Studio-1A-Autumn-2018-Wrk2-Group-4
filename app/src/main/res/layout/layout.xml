@@ -5,6 +5,7 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#26a69a"
     tools:context=".StepCounter">
 
     <TextView
@@ -32,6 +33,7 @@
         android:onClick="changeMaps"
         android:text="END"
         android:textSize="30sp"
+        android:background="#048b7a"
         tools:layout_editor_absoluteX="82dp"
         tools:layout_editor_absoluteY="389dp" />
 
@@ -41,6 +43,7 @@
         android:layout_height="wrap_content"
         android:text="Stop/Start Timer"
         android:textSize="14sp"
+        android:background="#048b7a"
         tools:layout_editor_absoluteX="115dp"
         tools:layout_editor_absoluteY="319dp" />
 

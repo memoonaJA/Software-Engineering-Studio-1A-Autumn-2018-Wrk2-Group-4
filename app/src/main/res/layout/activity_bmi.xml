@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#26a69a"
     tools:context="com.example.softwaregroup4.group4_fitnessapplication.BMI">
 
     <TextView
