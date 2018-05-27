@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Workout">
+    tools:context=".Workouts">
 
     <Button
         android:id="@+id/button5"
@@ -19,7 +19,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Jogging"
-        android:onClick="changeMaps"
         tools:layout_editor_absoluteX="148dp"
         tools:layout_editor_absoluteY="378dp" />
 
