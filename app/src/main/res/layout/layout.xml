@@ -6,46 +6,70 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#26a69a"
+    android:maxWidth="500dp"
+    android:minWidth="500dp"
     tools:context=".StepCounter">
 
     <TextView
         android:id="@+id/step"
         android:layout_width="wrap_content"
         android:layout_height="46dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Step Count: 0"
         android:textSize="30sp"
-        tools:layout_editor_absoluteX="102dp"
-        tools:layout_editor_absoluteY="94dp" />
+        app:layout_constraintBottom_toTopOf="@+id/Time_Elapsed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/Time_Elapsed"
         android:layout_width="283dp"
         android:layout_height="58dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="74dp"
         android:text="Time Elapsed: 00.00"
         android:textSize="30sp"
-        tools:layout_editor_absoluteX="51dp"
-        tools:layout_editor_absoluteY="192dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/step" />
 
     <Button
         android:id="@+id/button9"
         android:layout_width="220dp"
         android:layout_height="63dp"
-        android:onClick="changeMaps"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#048b7a"
+        android:onClick="changeToSummaryScreen"
         android:text="END"
         android:textSize="30sp"
-        android:background="#048b7a"
-        tools:layout_editor_absoluteX="82dp"
-        tools:layout_editor_absoluteY="389dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button10" />
 
     <Button
         android:id="@+id/button10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:background="#048b7a"
         android:text="Stop/Start Timer"
         android:textSize="14sp"
-        android:background="#048b7a"
-        tools:layout_editor_absoluteX="115dp"
-        tools:layout_editor_absoluteY="319dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Time_Elapsed" />
 
 
 </android.support.constraint.ConstraintLayout>

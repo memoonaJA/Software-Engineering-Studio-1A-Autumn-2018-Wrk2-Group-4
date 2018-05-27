@@ -1,11 +1,13 @@
 package com.example.softwaregroup4.group4_fitnessapplication;
 
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 
 public class StepCounter extends AppCompatActivity implements SensorEventListener {
@@ -41,6 +43,11 @@ public class StepCounter extends AppCompatActivity implements SensorEventListene
 
         step = (TextView)findViewById(R.id.step);
 
+    }
+
+    public void changeToSummaryScreen(View view) {
+        Intent intent = new Intent(this, Summary_workout.class);
+        startActivity(intent);
     }
 
     // Methods implemented from SensorEventListener class

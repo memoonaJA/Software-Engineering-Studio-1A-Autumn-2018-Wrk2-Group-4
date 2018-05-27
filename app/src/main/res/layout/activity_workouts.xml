@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#26a69a"
     tools:context=".Workouts">
 
     <Button
@@ -14,6 +15,7 @@
         android:layout_marginTop="8dp"
         android:text="Walking"
         app:layout_constraintStart_toStartOf="parent"
+        android:background="#048b7a"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <Button
@@ -24,6 +26,7 @@
         android:layout_marginTop="8dp"
         android:onClick="changeWork"
         android:text="Jogging"
+        android:background="#048b7a"
         app:layout_constraintStart_toEndOf="@+id/button5"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
@@ -35,6 +38,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Cycling"
+        android:background="#048b7a"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button6"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
@@ -47,6 +51,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Select Workout Activity"
+        android:textColor="@android:color/background_light"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,6 +79,7 @@
         android:layout_marginTop="60dp"
         android:onClick="changeWork"
         android:text="BEGIN"
+        android:background="#048b7a"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
