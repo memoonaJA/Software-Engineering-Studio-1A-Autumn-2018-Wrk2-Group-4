@@ -192,7 +192,7 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback, Se
         intent.putExtra("distances", String.format("%.2f", distances));
         intent.putExtra("time", String.format("%.2f", timeStop));
         intent.putExtra("Username", usernameDisplay);
-        intent.putExtra("Steps", steps);
+        intent.putExtra("Steps", String.valueOf(steps));
         startActivity(intent);
 
     }
@@ -286,6 +286,5 @@ public class Maps_GPS extends FragmentActivity implements OnMapReadyCallback, Se
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
     }
 }
