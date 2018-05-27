@@ -82,6 +82,7 @@
         android:onClick="changeMain"
         android:text="SAVE and CLOSE"
         android:textSize="18sp"
+        android:background="#048b7a"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
