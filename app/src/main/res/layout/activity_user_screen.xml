@@ -70,6 +70,21 @@
             app:layout_constraintTop_toBottomOf="@+id/button5" />
 
         <Button
+            android:id="@+id/button13"
+            android:layout_width="190dp"
+            android:layout_height="65dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            android:background="#048b7a"
+            android:gravity="center"
+            android:onClick="changeleader"
+            android:text="Leaderboard"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintStart_toStartOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/button" />
+
+        <Button
             android:id="@+id/button5"
             android:layout_width="190dp"
             android:layout_height="65dp"
